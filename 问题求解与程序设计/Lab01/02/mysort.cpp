@@ -18,7 +18,7 @@ void my_insert_sort(int *a, int num)
 
 void my_shell_sort(int *a, int num)
 {
-
+    
 }
 
 void merge(int *a, int start, int mid, int end)

@@ -22,5 +22,6 @@
     "files.associations": {
         "I2.0.C": "cpp",
         "iostream": "cpp"
-    }, // 格式化时调整include的顺序（按字母排序）
+    },
+    "C_Cpp.errorSquiggles": "Disabled", // 格式化时调整include的顺序（按字母排序）
 }
