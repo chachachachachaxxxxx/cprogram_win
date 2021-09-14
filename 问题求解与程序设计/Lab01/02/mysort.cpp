@@ -18,7 +18,23 @@ void my_insert_sort(int *a, int num)
 
 void my_shell_sort(int *a, int num)
 {
-    
+    for (int delta = num; delta; delta /= 2)
+    {
+        for (int i = 0; i < delta; i++)
+        {
+            for (int j = i + delta; j < num; j += delta)
+            {
+                int key = a[j];
+                int k = j - delta;
+                while (a[k] > key && k >= 0)
+                {
+                    a[k + delta] = a[k];
+                    k -= delta;
+                }
+                a[k + delta] = key;
+            }
+        }
+    }
 }
 
 void merge(int *a, int start, int mid, int end)
@@ -45,7 +61,7 @@ void merge(int *a, int start, int mid, int end)
 
 void my_merge_sort(int *a, int start, int end)
 {
-    if (end >= start)
+    if (start >= end)
         return;
     int mid = (start + end) / 2;
     my_merge_sort(a, start, mid);
@@ -73,11 +89,43 @@ void my_quick_sort(int *a, int left, int right)
             swap(a, ++last, i);
     }
     swap(a, last, left);
-    my_quick_sort(a, left, mid);
-    my_quick_sort(a, mid + 1, right);
+    my_quick_sort(a, left, last);
+    my_quick_sort(a, last + 1, right);
+}
+
+void swap(int &a, int &b)
+{
+    int key = a;
+    a = b;
+    b = key;
+}
+
+void max_heapify(int *a, int start, int end)
+{
+    int dad = start;
+    int son = start * 2 + 1;
+    while (son <= end)
+    {
+        if (son + 1 <= end && a[son] < a[son+1])
+            son++;
+        if (a[dad] > a[son])
+            return;
+        else
+        {
+            swap(a, dad, son);
+            dad = son;
+            son = dad * 2 + 1;
+        }
+    }
 }
 
 void my_heap_sort(int *a, int num)
 {
-    
+    for (int i = num / 2 - 1; i >= 0; i--)
+        max_heapify(a, i, num - 1);
+    for (int i = num - 1; i > 0; i--)
+    {
+        swap(a[0], a[i]);
+        max_heapify(a, 0, i - 1);
+    }
 }
