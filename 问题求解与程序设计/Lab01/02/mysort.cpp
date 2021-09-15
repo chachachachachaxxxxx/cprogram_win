@@ -26,7 +26,7 @@ void my_shell_sort(int *a, int num)
             {
                 int key = a[j];
                 int k = j - delta;
-                while (a[k] > key && k >= 0)
+                while (k >= 0 && a[k] > key)
                 {
                     a[k + delta] = a[k];
                     k -= delta;

@@ -36,23 +36,23 @@ int main(int argc, char *argv[])
     clock_t start, end;
 
     // 插入排序
-    // start = clock();
-    // my_insert_sort(a, length);
-    // end = clock();
-    // // for (int i = 0; i < length; i++)
-    // //     out << a[i] << endl;
-    // printf("插入排序用时：%fs\n", (double)(end - start) / CLOCKS_PER_SEC);
+    start = clock();
+    my_insert_sort(a, length);
+    end = clock();
+    // for (int i = 0; i < length; i++)
+    //     out << a[i] << endl;
+    printf("插入排序用时：%fs\n", (double)(end - start) / CLOCKS_PER_SEC);
     
 
     //希尔排序
     // for (int i = 0; i < length; i++)
     //     printf("%d\n", a_shell[i]);
-    // start = clock();
-    // my_shell_sort(a_shell, length);
-    // end = clock();
-    // for (int i = 0; i < length; i++)
-    //     out << a_shell[i] << endl;
-    // printf("希尔排序用时：%fs\n", (double)(end - start) / CLOCKS_PER_SEC);
+    start = clock();
+    my_shell_sort(a_shell, length);
+    end = clock();
+    for (int i = 0; i < length; i++)
+        out << a_shell[i] << endl;
+    printf("希尔排序用时：%fs\n", (double)(end - start) / CLOCKS_PER_SEC);
     
 
     //归并排序
