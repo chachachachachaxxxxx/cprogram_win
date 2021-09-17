@@ -12,11 +12,17 @@ private:
 
 public:
     percolation_model(int);
+    ~percolation_model();
     // 并查集操作
     int find(int p);
-    void weight_QU(int p, int q);
+    void weigh_QU(int p, int q);
     
     void switch_rand(); // 随机打开一块板砖
-    void percolation_if();  // 判断是否渗漏 
+    int percolation_if();  // 判断是否渗漏
+    int cnt_num();  // 概率计算
+    void print_model(); // 打印模型
+    void print_sets();
+    struct illegal_types{
+    };
 };
 #endif
