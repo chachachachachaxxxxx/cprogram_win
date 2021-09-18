@@ -90,20 +90,26 @@ using namespace std;
 
 int main()
 {
+    clock_t start, end;
     int N;
     cin >> N;
     percolation_model pm(N);
     int k = 0;
     // 并查集问题
-    while (!pm.percolation_if() && k <= 100)
+    start = clock();
+    while (!pm.percolation_if())
     {
         pm.switch_rand();
         //printf("\n");
-        k++;
+        //k++;
     }
+    end = clock();
     //printf("%d\n", k);
     printf("%d\n", pm.cnt_num());
-    pm.print_model();
-    //pm.print_sets();
+    
+    // pm.print_model();
+    printf("花费时间：%fs\n", (double)(end-start)/CLOCKS_PER_SEC);
+    // pm.path_compression();
+    // pm.print_sets();
     return 0;
 }

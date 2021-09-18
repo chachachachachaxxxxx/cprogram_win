@@ -1,7 +1,9 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <set>
 #include "percolation_model.h"
+using namespace std;
 
 int dx[4] = {-1, 0, 1, 0 };
 int dy[4] = { 0, -1, 0, 1 };
@@ -18,7 +20,9 @@ percolation_model::percolation_model(int num)
         a[i] = 0;
         id[i] = i;
         sz[i] = 0;
+        locked_num.insert(i);
     }
+    
 }
 
 percolation_model::~percolation_model()
@@ -41,36 +45,45 @@ void percolation_model::weigh_QU(int p, int q)
         return;
     if (sz[pRoot] == sz[qRoot])
     {
-        id[q] = pRoot;
+        id[qRoot] = pRoot;
         sz[pRoot]++;
     } else if (sz[pRoot] < sz[qRoot])
     {
-        id[p] = qRoot;
+        id[pRoot] = qRoot;
     } else {
-        id[q] = pRoot;
+        id[qRoot] = pRoot;
     }
 }
 
 void percolation_model::switch_rand()
 {
     srand((int)time(0));
-    int z = rand() % (N * N);
-    while (a[z] == 1)
-    {
-        z = rand() % (N * N);
-    }
+    int num = locked_num.size();
+    int zi = rand() % num;
+    set<int>::iterator zii;
+    zii = locked_num.begin();
+    int z = *(zii+zi);
+    locked_num.erase(z);
+    // while (a[z] == 1)
+    // {
+    //     //srand((int)time(0));
+    //     z = rand() % (N * N);
+    // }
     a[z] = 1;
     cnt++;
     int col, row;
     row = z / N;
     col = z % N;
+    int x, y;
     for (int i = 0; i < 4; i++)
     {
-        if (col + dx[i] >= 0 && col + dx[i] < N && row + dy[i] >= 0 && row + dy[i] < N)
+        x = col + dx[i];
+        y = row + dy[i];
+        if (x >= 0 && x < N && y >= 0 && y < N && a[y * N + x] == 1)
         {
-            if (a[(row + dy[i]) * N + col + dx[i]] == 1)
-                weigh_QU(z, (row + dy[i]) * N + col + dx[i]);
+            weigh_QU(z, y * N + x);
         }
+
     }
 
         // 并查集合并
@@ -107,6 +120,7 @@ int percolation_model::percolation_if()
                     if (pRoot == qRoot)
                     {
                         //printf("%d %d %d\n", i, j, pRoot);
+                        path_print(pRoot);
                         return 1;
                     }
                 }
@@ -136,7 +150,26 @@ void percolation_model::print_sets()
     for (int i = 0; i < N; i++)
     {
         for (int j = 0; j < N; j++)
-            printf("%d ", id[i * N + j]);
+            printf("%2d ", id[i * N + j]);
         printf("\n");
+    }
+}
+
+void percolation_model::path_compression()
+{
+    for (int i = 0; i < N * N; i++)
+    {
+        int iRoot = find(i);
+        id[i] = iRoot;
+    }
+}
+
+void percolation_model::path_print(int k)
+{
+    for (int i = 0; i < N * N; i++)
+    {
+        int root = find(i);
+        if (root == k)
+            a[i] = 2;
     }
 }
