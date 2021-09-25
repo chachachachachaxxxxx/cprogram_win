@@ -90,6 +90,7 @@ using namespace std;
 
 int main()
 {
+    srand((unsigned)time(0));
     clock_t start, end;
     int N;
     cout << "请输入N："

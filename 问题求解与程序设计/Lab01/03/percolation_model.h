@@ -1,13 +1,17 @@
 #ifndef PERCOLATION_MODEL_H
 #define PERCOLATION_MODEL_H
-#include <set>
+// #include <set>
+#include <vector>
 
 class percolation_model{
 private:
     int N;
     int *a;
     int cnt; // 打开板砖个数
-    std::set<int> locked_num{};
+    // std::set<int> locked_num{};
+    std::vector<int> locked_num{};
+    // int *locked_num;
+    // int locked_length;
 
     int *id;
     int *sz;
@@ -23,6 +27,7 @@ public:
     int percolation_if();  // 判断是否渗漏
     int cnt_num();  // 概率计算
     void print_model(); // 打印模型
+
     void print_sets();
     void path_compression();
     void path_print(int);

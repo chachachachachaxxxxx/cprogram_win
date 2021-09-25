@@ -1,7 +1,6 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
-#include <set>
 #include "percolation_model.h"
 using namespace std;
 
@@ -15,14 +14,16 @@ percolation_model::percolation_model(int num)
     cnt = 0;
     id = new int[N * N];
     sz = new int[N * N];
+    // locked_num = new int[N * N];
+    // locked_length = N * N;
     for (int i = 0; i < N * N; i++)
     {
         a[i] = 0;
         id[i] = i;
         sz[i] = 0;
-        locked_num.insert(i);
+        locked_num.push_back(i);
+        // locked_num[i] = i;
     }
-    
 }
 
 percolation_model::~percolation_model()
@@ -57,13 +58,18 @@ void percolation_model::weigh_QU(int p, int q)
 
 void percolation_model::switch_rand()
 {
-    srand((int)time(0));
+    //srand((int)time(0));
     int num = locked_num.size();
+    if (num == 0)
+        return;
     int zi = rand() % num;
-    set<int>::iterator zii;
-    zii = locked_num.begin();
-    int z = *(zii+zi);
-    locked_num.erase(z);
+    int z = locked_num[zi];
+    locked_num.erase(locked_num.begin() + zi);
+    // for (int i = zi; i < locked_length; i++)
+    // {
+    //     locked_num[i] = locked_num[i + 1];
+    // }
+    // locked_length--;
     // while (a[z] == 1)
     // {
     //     //srand((int)time(0));
