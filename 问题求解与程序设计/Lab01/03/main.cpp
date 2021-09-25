@@ -92,21 +92,35 @@ int main()
 {
     clock_t start, end;
     int N;
+    cout << "请输入N："
     cin >> N;
-    percolation_model pm(N);
-    int k = 0;
+    cout << "请输入测试次数：";
+    int times;
+    int ci = 0;
+    cin >> times;
+    // int k = 0;
     // 并查集问题
+    double p_m = 0.0;
+    long cnt_sum = 0;
     start = clock();
-    while (!pm.percolation_if())
+    while(times--)
     {
-        pm.switch_rand();
-        //printf("\n");
-        //k++;
+        percolation_model pm(N);
+        while (!pm.percolation_if())
+        {
+            pm.switch_rand();
+            //printf("\n");
+            //k++;
+        }
+        // p_m = (p_m * ci + (double)pm.cnt_num() / (N * N)) / (ci + 1);
+        // ci++;
+        cnt_sum += pm.cnt_num();
     }
+    p_m = (double)cnt_sum / ((long)N * N * times);
     end = clock();
     //printf("%d\n", k);
-    printf("%d\n", pm.cnt_num());
-    
+    //printf("%d\n", pm.cnt_num());
+    cout << p_m << endl;
     // pm.print_model();
     printf("花费时间：%fs\n", (double)(end-start)/CLOCKS_PER_SEC);
     // pm.path_compression();
