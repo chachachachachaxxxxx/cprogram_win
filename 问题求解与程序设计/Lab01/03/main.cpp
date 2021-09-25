@@ -90,16 +90,18 @@ using namespace std;
 
 int main()
 {
+    srand((unsigned)time(0));
     clock_t start, end;
     int N;
     cin >> N;
     percolation_model pm(N);
-    int k = 0;
+    long k = 0;
     // 并查集问题
     start = clock();
     while (!pm.percolation_if())
     {
         pm.switch_rand();
+        
         //printf("\n");
         //k++;
     }
