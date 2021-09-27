@@ -93,7 +93,7 @@ int main()
     srand((unsigned)time(0));
     clock_t start, end;
     int N;
-    cout << "请输入N："
+    cout << "请输入N：";
     cin >> N;
     cout << "请输入测试次数：";
     int times;
@@ -104,7 +104,8 @@ int main()
     double p_m = 0.0;
     long cnt_sum = 0;
     start = clock();
-    while(times--)
+    int it = 0;
+    while(it < times)
     {
         percolation_model pm(N);
         while (!pm.percolation_if())
@@ -116,8 +117,10 @@ int main()
         // p_m = (p_m * ci + (double)pm.cnt_num() / (N * N)) / (ci + 1);
         // ci++;
         cnt_sum += pm.cnt_num();
+        it++;
     }
-    p_m = (double)cnt_sum / ((long)N * N * times);
+    //cout << cnt_sum << endl;
+    p_m = (double)cnt_sum / (long)(N * N * times) * 100;
     end = clock();
     //printf("%d\n", k);
     //printf("%d\n", pm.cnt_num());
