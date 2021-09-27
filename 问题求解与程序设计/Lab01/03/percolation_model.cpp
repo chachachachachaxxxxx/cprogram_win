@@ -59,17 +59,20 @@ void percolation_model::weigh_QU(int p, int q)
 void percolation_model::switch_rand()
 {
     //srand((int)time(0));
+
     int num = locked_num.size();
     if (num == 0)
         return;
     int zi = rand() % num;
     int z = locked_num[zi];
     locked_num.erase(locked_num.begin() + zi);
+    
     // for (int i = zi; i < locked_length; i++)
     // {
     //     locked_num[i] = locked_num[i + 1];
     // }
     // locked_length--;
+    // int z = rand() % (N * N);
     // while (a[z] == 1)
     // {
     //     //srand((int)time(0));
