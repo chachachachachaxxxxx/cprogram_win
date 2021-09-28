@@ -3,26 +3,20 @@ using namespace std;
 
 const int MAXSIZE = 100;
 
-int insert(int *a, int &n, int i, int x)
-{
-    if (i < 0 || i > n)
-        return 1;
-    if (n == MAXSIZE)
-        return 2;
-    for (int j = n; j > i; j--)
-    {
-        a[j] = a[j - 1];
-    }
-    a[i] = x;
-    (n)++;
-    return 0;
-}
+int f[MAXSIZE];
 
 int main()
 {
-    int list[MAXSIZE] = {};
-    int n = 10;
-    insert(list, n, 5, 5);
-    printf("%d\n", n);
+    int N;
+    cin >> N;
+    f[0] = 1;
+    f[1] = 1;
+    for (int i = 2; i < N; i++)
+    {
+        for (int k = 0; k < i; k++)
+            f[i] += f[k] * f[i - k - 1];
+    }
+    for (int i = 0; i < N; i++)
+        cout << f[i] << endl;
     return 0;
 }
