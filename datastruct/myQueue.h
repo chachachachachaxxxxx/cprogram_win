@@ -11,6 +11,7 @@ private:
     int MAXN;
 
 public:
+    myQueue();
     myQueue(int);
     ~myQueue();
 
@@ -29,6 +30,13 @@ public:
 
     void print();
 };
+
+myQueue::myQueue()
+{
+    MAXN = 100;
+    a = new int[MAXN];
+    front = rear = 0;
+}
 
 myQueue::myQueue(int N)
 {
