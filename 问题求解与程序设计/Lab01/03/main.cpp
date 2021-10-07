@@ -93,9 +93,9 @@ int main()
     srand((unsigned)time(0));
     clock_t start, end;
     int N;
-    cout << "请输入N：";
+    cout << "in N:";
     cin >> N;
-    cout << "请输入测试次数：";
+    cout << "in times:";
     int times;
     int ci = 0;
     cin >> times;
@@ -117,6 +117,7 @@ int main()
         // p_m = (p_m * ci + (double)pm.cnt_num() / (N * N)) / (ci + 1);
         // ci++;
         cnt_sum += pm.cnt_num();
+        // pm.print_model();
         it++;
     }
     //cout << cnt_sum << endl;
@@ -126,7 +127,7 @@ int main()
     //printf("%d\n", pm.cnt_num());
     cout << p_m << endl;
     // pm.print_model();
-    printf("花费时间：%fs\n", (double)(end-start)/CLOCKS_PER_SEC);
+    printf("time cost:%fs\n", (double)(end-start)/CLOCKS_PER_SEC);
     // pm.path_compression();
     // pm.print_sets();
     return 0;

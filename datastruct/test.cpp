@@ -7,6 +7,7 @@ int f[MAXSIZE];
 
 int main()
 {
+    cout << "你好！" << endl;
     int N;
     cin >> N;
     f[0] = 1;
