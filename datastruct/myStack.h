@@ -15,8 +15,8 @@ public:
 
     void clear();
     void reverse();
-    int pop();
-    int push(int);
+    void pop();
+    void push(int);
 
     int top();
 
@@ -53,15 +53,14 @@ void myStack::clear()
     ptr = 0;
 }
 
-int myStack::pop()
+void myStack::pop()
 {
-    return a[ptr--];
+    ptr--;
 }
 
-int myStack::push(int tar)
+void myStack::push(int tar)
 {
     a[ptr++] = tar;
-    return tar;
 }
 
 int myStack::top()
