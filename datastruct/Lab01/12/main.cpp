@@ -71,7 +71,7 @@ int main()
     }
 
     print(h1);
-    reverse_LinkList(h1);
+    h1 = reverse_LinkList(h1);
     print(h1);
 
 

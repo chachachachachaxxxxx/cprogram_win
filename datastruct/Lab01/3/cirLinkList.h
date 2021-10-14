@@ -8,12 +8,12 @@ typedef struct node{
 
 NODE *mergeLinkList(NODE *a, NODE *b)
 {   
-    if (a->next == NULL)
+    if (a->next == NULL)    // 如果某个链表为空，则直接返回另外一个链表
         return b;
     else if (b->next == NULL)
         return a;
 
-    NODE *p, *q;
+    NODE *p, *q;        // p
     p = a->next;
     q = b->next;
 
@@ -52,23 +52,6 @@ NODE *mergeLinkList(NODE *a, NODE *b)
             m = q;
             q = q->next;
         }
-        // if (flag == 0)
-        // {
-        //     if (p->data <= q->data)
-        //     {
-        //         m->next = p;
-        //         m = p;
-        //         m->next = q;
-        //         m = q;
-        //     } else {
-        //         m->next = q;
-        //         m = q;
-        //         m->next = p;
-        //         m = p;
-        //     }
-        // }
-        // m->next = a->next;
-        // return a;
     }
 
     
@@ -87,24 +70,6 @@ NODE *mergeLinkList(NODE *a, NODE *b)
             m = p;
             p = p->next;
         }
-
-        // if (flag == 0)
-        // {
-        //     if (p->data <= q->data)
-        //     {
-        //         m->next = p;
-        //         m = p;
-        //         m->next = q;
-        //         m = q;
-        //     } else {
-        //         m->next = q;
-        //         m = q;
-        //         m->next = p;
-        //         m = p;
-        //     }
-        // }
-        // m->next = a->next;
-        // return a;
     }
 
     if (flag == 0)
