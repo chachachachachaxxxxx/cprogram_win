@@ -37,19 +37,61 @@ NODE* reverse_LinkList(NODE *head)
     return head;
 }
 
-NODE *insert(int a, NODE *head, int key)
+NODE *insert(NODE *head, int a, int key)
 {
+    NODE *A = new NODE;
+    A->data = a;
+    A->next = NULL;
+    if (head == NULL)
+    {
+        head = A;
+        return head;
+    }
     NODE *p = head;
+    
+    if (p->data == key)
+    {
+        A->next = p;
+        head = A;
+        return head;
+    }
+
     NODE *t = NULL;
-    while (p != NULL && p->key != key)
+    while (p != NULL && p->data != key)
     {
         t = p;
         p = p->next;
     }
-    if (p == NULL && t == NULL)
+    t->next = A;
+    A->next = p;
+    return head;
+}
+
+NODE* insert(NODE *head, NODE *a, int key)
+{
+    if (head == NULL)
     {
-        
+        head = a;
+        return head;
     }
+    NODE *p = head;
+    
+    if (head->data == key)
+    {
+        a->next = p;
+        head = a;
+        return head;
+    }
+
+    NODE *t = NULL;
+    while (p != NULL && p->data != key)
+    {
+        t = p;
+        p = p->next;
+    }
+    t->next = a;
+    a->next = p;
+    return head;
 }
 
 #endif
