@@ -21,6 +21,7 @@ public:
     double loadFactor();
     int wordsNum();
     int *lenNum();
+    int search2(string);
 };
 
 myHash::myHash(int N)
@@ -94,6 +95,19 @@ double myHash::loadFactor()
 int* myHash::lenNum()
 {
     return list_len;
+}
+
+int myHash::search2(string st)
+{
+    int ind = index(st);
+    list<string>::iterator it;
+    int i = 0;
+    for (it = base[ind].begin(); it != base[ind].end(); it++, i++)
+    {
+        if (*it == st)
+            return i + 1;
+    }
+    return i;
 }
 
 #endif
