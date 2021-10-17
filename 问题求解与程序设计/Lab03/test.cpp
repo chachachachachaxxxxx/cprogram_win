@@ -8,11 +8,11 @@ int main()
     BST bst(a, 5);
     // midOrder(bst.Root());
     // printf("\n");
-    preOrder(bst.Root());
+    // preOrder(bst.Root());
     // printf("\n");
     // nextOrder(bst.Root());
     // printf("\n");
-    // layerOrder(bst.Root());
+    layerOrder(bst.Root());
     // printf("\n");
     //printf("%p", bst.Root());
     // printf("%p\n%p\n", bst.Root()->lchild, bst.Root()->rchild);
