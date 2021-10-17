@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-result1 = open("result3.txt")
+result1 = open("result.txt")
 head = result1.readline()
 headlist = head.split(' ')
 nums = result1.readlines()
