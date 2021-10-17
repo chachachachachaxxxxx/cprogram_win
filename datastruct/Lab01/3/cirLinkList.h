@@ -13,10 +13,9 @@ NODE *mergeLinkList(NODE *a, NODE *b)
     else if (b->next == NULL)
         return a;
 
-    NODE *p, *q;        // p
+    NODE *p, *q;        // p结点记录a链表遍历到的结点，q结点记录b链表遍历到的结点
     p = a->next;
     q = b->next;
-
 
     NODE *m;
     m = a;
