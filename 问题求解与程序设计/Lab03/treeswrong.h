@@ -11,10 +11,10 @@ typedef struct node
 
 void preOrder(NODE *t) // 先根遍历
 {
-    static int i = 0;
+    //static int i = 0;
     if (t != NULL)
     {
-        printf("%d:", i);
+        //printf("%d:", i++);
         printf("%d\n", t->key);
         preOrder(t->lchild);
         preOrder(t->rchild);
@@ -23,25 +23,25 @@ void preOrder(NODE *t) // 先根遍历
 
 void nextOrder(NODE *t) // 后根遍历
 {
-    static int i = 0;
+    //static int i = 0;
     if (t != NULL)
     {
-        preOrder(t->lchild);
-        preOrder(t->rchild);
-        printf("%d:", i);
+        nextOrder(t->lchild);
+        nextOrder(t->rchild);
+        //printf("%d:", i++);
         printf("%d\n", t->key);
     }
 }
 
 void midOrder(NODE *t) // 中根遍历
 {
-    static int i = 0;
+    //static int i = 0;
     if (t != NULL)
     {
-        preOrder(t->lchild);
-        printf("%d:", i);
+        midOrder(t->lchild);
+        //printf("%d:", i++);
         printf("%d\n", t->key);
-        preOrder(t->rchild);
+        midOrder(t->rchild);
     }
 }
 
@@ -50,11 +50,11 @@ void layerOrder(NODE *t)
     std::queue<NODE *> que;
     if (t != NULL)
         que.push(t);
-    int i = 0;
+    //int i = 0;
     NODE *p;
     while (!que.empty())
     {
-        printf("%d:", i);
+        //printf("%d:", i);
         p = que.front();
         que.pop();
         printf("%d\n", p->key);
@@ -62,32 +62,35 @@ void layerOrder(NODE *t)
             que.push(p->lchild);
         if (p->rchild != NULL)
             que.push(p->rchild);
-        i++;
+        //i++;
     }
 }
 
 NODE *search(NODE *t, int key){
-    while (t != NULL && t->key != key)
+    NODE *p = t;
+    while (p != NULL && p->key != key)
     {
-        if (key < t->key)
-            t = t->lchild;
+        if (key < p->key)
+            p = p->lchild;
         else
-            t = t->rchild;
+            p = p->rchild;
     }
-    return t;
+    return p;
 }
 
 
 NODE *mini(NODE *t){
-    while (t->lchild != NULL)
-        t = t->lchild;
-    return t;
+    NODE *p = t;
+    while (p != NULL)
+        p = p->lchild;
+    return p;
 }
 
 NODE *maxi(NODE *t){
-    while (t->rchild != NULL)
-        t = t->rchild;
-    return t;
+    NODE *p = t;
+    while (p != NULL)
+        p = p->rchild;
+    return p;
 }
 
 void transplant(NODE *root, NODE *x, NODE *y){
@@ -105,19 +108,28 @@ void transplant(NODE *root, NODE *x, NODE *y){
 }
 
 void insert(NODE *root, NODE *x){
-        NODE *y, *cp;
-        y = NULL;
-        cp = root;
-        while (cp != NULL){
-            y = cp;
-            if (x->key < cp->key)
-                cp = cp->lchild;
-            else
-                cp = cp->rchild;
-        }
-        x->parent = y;
-        cp = x;
+    // if (root == NULL)
+    // {
+    //     root->key = x->key;
+    //     root->parent = root->lchild = root->rchild = NULL;
+    //     return;
+    // }
+    NODE *y, *cp;
+    y = NULL;
+    cp = root;
+    while (cp != NULL){
+        y = cp;
+        if (x->key < cp->key)
+            cp = cp->lchild;
+        else
+            cp = cp->rchild;
     }
+    if (cp == y->lchild)
+        y->lchild = x;
+    else
+        y->rchild = x;
+    x->parent = y;
+}
 
 class BST{ // binary search trees
 private:
@@ -129,6 +141,7 @@ public:
         x0->key = a[0];
         x0->lchild = x0->rchild = x0->parent = NULL;
         root = x0;
+        // root = NULL;
         for (int i = 1; i < N; i++)
         {
             NODE *x;
