@@ -240,7 +240,16 @@ void RB_delete(NODE* &tr, NODE *node)
         NODE *replace = node;
         replace = replace->rchild;
         while (replace->lchild != NULL)
+        {
             replace = replace->lchild;
+        }
+
+        NODE *p = replace->parent;
+        while (p != NULL)
+        {
+            p->size -= 1;
+            p = p->parent;
+        }
 
         if (node->parent != NULL)
         {
@@ -273,17 +282,12 @@ void RB_delete(NODE* &tr, NODE *node)
         replace->lchild = node->lchild;
         node->lchild->parent = replace;
 
-        // size_update(replace->lchild);
-        // NODE *p = replace;
-        // while (p != NULL)
-        // {
-        //     p->size -= 1;
-        //     p = p->parent;
-        // }
+        replace->size = replace->lchild->size + 1;
+        if (replace->rchild != NULL)
+            replace->size += replace->rchild->size;
 
         if (color == false)
             removeFixUp(tr, child, parent);
-
         
         delete node;
         return;
@@ -298,7 +302,15 @@ void RB_delete(NODE* &tr, NODE *node)
     color = node->isRed;
 
     if (child != NULL)
+    {
         child->parent = parent;
+        // NODE *p = parent;
+        // while (p != NULL)
+        // {
+        //     p->size -= 1;
+        //     p = p->parent;
+        // }
+    }
     
     if (parent != NULL)
     {
@@ -306,6 +318,12 @@ void RB_delete(NODE* &tr, NODE *node)
             parent->lchild = child;
         else
             parent->rchild = child;
+        NODE *p = parent;
+        while (p != NULL)
+        {
+            p->size -= 1;
+            p = p->parent;
+        }
     }
     else
         tr = child;
@@ -470,13 +488,17 @@ void RBTree::destroy(NODE* &tree)
     tree = NULL;
 }
 
+
+
+
+
 typedef struct point{
     double key;
     bool isRight;
+    double startkey;
 } POINT;
 
 POINT ps[MAXN * 2];
-map<double, double> r2l;
 
 bool cmp(POINT a, POINT b)
 {
@@ -497,15 +519,15 @@ int main()
         {
             ps[i * 2].key = res1;
             ps[i * 2].isRight = true;
+            ps[i * 2].startkey = res2;
             ps[i * 2 + 1].key = res2;
             ps[i * 2 + 1].isRight = false;
-            r2l[res1] = res2;
         } else {
             ps[i * 2].key = res2;
             ps[i * 2].isRight = true;
+            ps[i * 2].startkey = res1;
             ps[i * 2 + 1].key = res1;
             ps[i * 2 + 1].isRight = false;
-            r2l[res2] = res1;
         }
     }
     sort(ps, ps + 2 * N, cmp);
@@ -519,30 +541,21 @@ int main()
     {
         if (ps[i].isRight)
         {
-            double lkey = r2l[ps[i].key];
-            int m = smallnum(rbtree.Root(), ps[i].key);
+            double lkey = ps[i].startkey;
             int n = smallnum(rbtree.Root(), lkey);
             
-            ans += m - n - 1;
+            ans += rbtree.Root()->size - n - 1;
             
             NODE *l = search(rbtree.Root(), lkey);
             //cout << lkey << " " << ps[i].key << endl;
             // cout << l->key << endl;
             // cout << m << " " <<  n << endl;
-            NODE *p = l->parent;
-            NODE *p1 = p;
-            while (p != NULL)
-            {
-                p->size -= 1;
-                p = p->parent;
-            }
             rbtree.RBdelete(l);
-            size_update(p1);
         } else {
             rbtree.insert(ps[i].key);
         }
-        midorder(rbtree.Root());
-        cout << endl;
+        // midorder(rbtree.Root());
+        // cout << endl;
     }
     cout << ans << endl;
 }
