@@ -158,7 +158,7 @@ void RB_delete(NODE* &tr, NODE *node)
         while (replace->lchild != NULL)
             replace = replace->lchild;
         
-        if (node != NULL)
+        if (node->parent != NULL)
         {
             if (node->parent->lchild == node)
                 node->parent->lchild = replace;
