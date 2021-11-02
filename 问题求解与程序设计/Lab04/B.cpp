@@ -22,6 +22,14 @@ void RB_insert_fixup(NODE *&, NODE *);
 void removeFixUp(NODE *&, NODE *, NODE *);
 NODE *serach(NODE *, int, int);
 
+void nilInit()
+{
+    nil->isRed = false;
+    nil->key = 0;
+    nil->left = nil->right = nil->parent = NULL;
+    nil->p = nil->v = nil->m = nil->o = 0;
+}
+
 int max(int a,int b,int c)  
 {  
     if(a>=b && a>=c)  
@@ -175,6 +183,7 @@ void RB_insert(NODE* &tr, NODE *z)
     z->isRed = true;
 
     RB_insert_fixup(tr, z);
+
     NODE *p = z;
     while (p != nil)
     {
@@ -485,13 +494,6 @@ void midorder(NODE *t)
     midorder(t->right);
 }
 
-void nilInit()
-{
-    nil->isRed = false;
-    nil->key = 0;
-    nil->left = nil->right = nil->parent = NULL;
-    nil->p = nil->v = nil->m = nil->o = 0;
-}
 
 int main()
 {
@@ -522,7 +524,11 @@ int main()
             if (p != nil)
             {
                 p->p--;
+            while (p != nil)
+            {
                 updateVOM(p);
+                p = p->parent;
+            }
             } else {
                 tr.insert(ri, -1);
             }
@@ -551,8 +557,7 @@ int main()
                 p = p->parent;
             }
             // if (p->p == 0)
-            //     tr.rbDelete(p);
-                
+            //     tr.rbDelete(p)
         }
         // midorder(tr.Root());
         // cout << endl;

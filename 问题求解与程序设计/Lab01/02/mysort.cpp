@@ -13,7 +13,7 @@ void my_insert_sort(int *a, int num)
             j--;
         }
         a[j + 1] = key;
-    }
+    } 
 }
 
 void my_shell_sort(int *a, int num)
