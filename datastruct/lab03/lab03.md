@@ -327,3 +327,89 @@ int main(int argv, char *argc[])
 
 ### Solution
 
+可以用三路快排，即选取基准值之后，
+
+小于基准值的放左边一路，大于基准值的放右边一路，等于基准值的放中间一路
+
+### Code
+
+```c++
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+using namespace std;
+
+int N = 0;
+
+void print(int *a, int len)
+{
+    for (int i = 0; i < len; i++)
+        cout << a[i] << " ";
+    cout << endl;
+}
+
+void quick3sort(int *a, int left, int right)
+{
+    if (left >= right)
+        return;
+
+    int i = 0;
+    int mid = (left + right) / 2;
+    int low = left, up = right;
+    int lowt = left;
+    swap(a[left], a[mid]);
+    
+    printf("%d:a[%d](%d)<->a[%d](%d)\n", i++, left, a[left], (left + right) / 2, a[(left + right) / 2]);
+    
+    int key = a[left];
+    while (low <= up)
+    {
+        if (a[low] < key)
+        {
+            swap(a[lowt++], a[low++]);
+            
+            printf("%d:a[%d](%d)<->a[%d](%d)\n", i++, lowt-1, a[low-1], low-1, a[lowt-1]);
+            
+        }
+        else if (a[low] > key)
+        {
+            swap(a[low], a[up--]);
+            
+            printf("%d:a[%d](%d)<->a[%d](%d)\n", i++, low, a[up+1], up+1, a[low]);
+            
+        }
+            
+        else
+            low++;
+    }
+
+    cout << endl;
+    //cout << lowt << " " << up+1 << endl;
+    print(a, N);
+    cout << endl;
+    
+    quick3sort(a, left, lowt - 1);
+    quick3sort(a, up + 1, right);
+}
+
+int main(int argv, char *argc[])
+{
+    ifstream in(argc[1]);
+    in >> N;
+    int *a = new int[N];
+    for (int i = 0; i < N; i++)
+        in >> a[i];
+    print(a, N);
+    printf("\n");
+    quick3sort(a, 0, N - 1);
+}
+```
+
+### Result
+
+![image-20211103143135948](lab03.assets/image-20211103143135948.png)
+
+### Analysis
+
+改进之处在于对于重复的元素不再进行排序，而是将重复的元素归为一路后，对另外两路进行快排，即减少了重复元素移动的开销。
+
