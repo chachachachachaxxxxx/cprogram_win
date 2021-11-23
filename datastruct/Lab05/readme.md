@@ -1,35 +1,57 @@
+<center><font size="70" color="skyblue"><b>ReadMe</b></font></center>
+
+## main.cpp(test program)
+
+```c++
 #include <iostream>
-#include <stack>
-#include <queue>
+#include "BTree.cpp"
+#include <fstream>
 using namespace std;
-const int MAXN = 1e5;
-const int MAX = 1e8;
-const int MIN = -1e8;
 
-typedef struct binaryTreeNODE//二叉树结点结构
+int main()
 {
-    int data;//结点值
-    struct binaryTreeNODE *lchild;//左子节点
-    struct binaryTreeNODE *rchild;//右子节点
-}BiNODE; //树的结构
+    // BiNODE *ttTree = buildTree_twoTags();
+    // preorder(ttTree);
+    // preorderRecursive(ttTree);
+    // inorder(ttTree);
+    // inorderRecursive(ttTree);
+    // postorder(ttTree);
+    // postorderRecursive(ttTree);
+    // layerOrder(ttTree);
+    // cout << endl;
 
-BiNODE* buildTree_twoTags();//前序序列+两个标志位建树
-BiNODE* buildTree_pre_in();//前序+中序建树
-BiNODE* buildTree_post_in();//后序+中序建树
-void preorder(BiNODE *root);               //非递归前序遍历
-void preorderRecursive(BiNODE *root);      //递归前序遍历
-void inorder(BiNODE *root);                //非递归中序遍历
-void inorderRecursive(BiNODE *root);       //递归中序遍历
-void postorder(BiNODE *root);              //非递归后序遍历
-void postorderRecursive(BiNODE *root);     //递归后序遍历
-void layerorder(BiNODE* root);//层次遍历
-int getNodeNum(BiNODE* root);//求结点个数
-int getTreeHeight(BiNODE* root);//无需输出，返回即可
-bool isFull(BiNODE* root);//判断是否是满二叉树
-bool isComplete(BiNODE* root);//判断是否是完全二叉树
-bool isBinarySearchTree(BiNODE* root);//判断是否是二叉搜索树
+    // BiNODE *preTree = buildTree_pre_in();
+    // preorder(preTree);
+    // preorderRecursive(preTree);
+    // inorder(preTree);
+    // inorderRecursive(preTree);
+    // postorder(preTree);
+    // postorderRecursive(preTree);
+    // layerOrder(preTree);
 
+    BiNODE *postTree = buildTree_post_in();
+    // preorder(postTree);
+    // preorderRecursive(postTree);
+    // inorder(postTree);
+    // inorderRecursive(postTree);
+    // postorder(postTree);
+    // postorderRecursive(postTree);
+    layerOrder(postTree);
 
+    cout << getNodeNum(postTree) << endl;
+    cout << getTreeHeight(postTree) << endl;
+    cout << isFull(postTree) << endl;
+    cout << isComplete(postTree) << endl;
+    cout << isBinarySearchTree(postTree) << endl;
+}
+
+```
+
+## functions(BTree.cpp)
+
+### constructed function(NewNODE)
+
+```c++
 BiNODE* NewNODE() // 创建一个新结点
 {
     BiNODE *p = new BiNODE;
@@ -37,7 +59,11 @@ BiNODE* NewNODE() // 创建一个新结点
     p->lchild = p->rchild = NULL;
     return p;
 }
+```
 
+### buildTree_twoTags
+
+```c++
 BiNODE* buildTree_twoTags()
 {
     int N;
@@ -80,8 +106,11 @@ BiNODE* buildTree_twoTags()
     delete[] tree;
     return root;
 }
+```
 
+### buildTree_pre_in
 
+```c++
 // 前序中序确定二叉树的辅助函数，并返回根节点
 BiNODE* generateTree_pre(int pre[], int mid[], int s, int e) 
 {
@@ -109,7 +138,7 @@ BiNODE* generateTree_pre(int pre[], int mid[], int s, int e)
 
 BiNODE* buildTree_pre_in()
 {
-    int N; // 输入
+    int N;
     cin >> N;
     int *pre, *mid;
     pre = new int[N];
@@ -127,7 +156,11 @@ BiNODE* buildTree_pre_in()
     delete[] mid;
     return root;
 }
+```
 
+### buildTree_post_in
+
+```c++
 BiNODE* generateTree_post(int *post, int *mid, int s, int e, int N) // 后序中序确定二叉树的辅助函数
 {
     if (s > e)
@@ -169,11 +202,11 @@ BiNODE* buildTree_post_in()
     delete[] mid;
     return root;
 }
+```
 
+### preorder
 
-
-
-
+```c++
 void preorder(BiNODE* root)
 {
     if (root == NULL)
@@ -194,7 +227,25 @@ void preorder(BiNODE* root)
         s.push(p->lchild); // 再放左子节点
     }
 }
+```
 
+### preorderRecursive
+
+```c++
+void preorderRecursive(BiNODE* root)
+{
+    if (root == NULL)
+        return;
+
+    cout << root->data << endl;
+    preorderRecursive(root->lchild);
+    preorderRecursive(root->rchild);
+}
+```
+
+### inorder
+
+```c++
 void inorder(BiNODE *root)
 {
     if (root == NULL)
@@ -218,7 +269,25 @@ void inorder(BiNODE *root)
         }
     }
 }
+```
 
+### inorderRecursive
+
+```c++
+void inorderRecursive(BiNODE* root)
+{
+    if (root == NULL)
+        return;
+    
+    inorderRecursive(root->lchild);
+    cout << root->data << endl;
+    inorderRecursive(root->rchild);
+}
+```
+
+### postorder
+
+```c++
 void postorder(BiNODE *root)
 {
     if (root == NULL)
@@ -251,27 +320,11 @@ void postorder(BiNODE *root)
         }
     }
 }
+```
 
-void preorderRecursive(BiNODE* root)
-{
-    if (root == NULL)
-        return;
+### postorderRecursive
 
-    cout << root->data << endl;
-    preorderRecursive(root->lchild);
-    preorderRecursive(root->rchild);
-}
-
-void inorderRecursive(BiNODE* root)
-{
-    if (root == NULL)
-        return;
-    
-    inorderRecursive(root->lchild);
-    cout << root->data << endl;
-    inorderRecursive(root->rchild);
-}
-
+```c++
 void postorderRecursive(BiNODE* root)
 {
     if (root == NULL)
@@ -281,7 +334,11 @@ void postorderRecursive(BiNODE* root)
     postorderRecursive(root->rchild);
     cout << root->data << endl;
 }
+```
 
+### layerorder
+
+```c++
 void layerorder(BiNODE* root)
 {
     if (root == NULL)
@@ -302,9 +359,11 @@ void layerorder(BiNODE* root)
             que.push(p->rchild);
     }
 }
+```
 
+### getNodeNum
 
-
+```c++
 int getNodeNum(BiNODE* root) // 用递归求解节点数
 {
     if (root == NULL)
@@ -312,7 +371,11 @@ int getNodeNum(BiNODE* root) // 用递归求解节点数
 
     return 1 + getNodeNum(root->lchild) + getNodeNum(root->rchild);
 }
+```
 
+### getTreeHeight
+
+```c++
 int getTreeHeight(BiNODE* root) // 只有根节点的树高认为是1
 {
     if (root == NULL)
@@ -323,7 +386,11 @@ int getTreeHeight(BiNODE* root) // 只有根节点的树高认为是1
 
     return 1 + (m1 > m2 ? m1 : m2);
 }
+```
 
+### isFull
+
+```c++
 bool isFull(BiNODE* root)
 {
     if (root == NULL)
@@ -332,16 +399,20 @@ bool isFull(BiNODE* root)
     int H = getTreeHeight(root);
     int N = getNodeNum(root);
 
-    int HN = 1;
+    int HN = 1; 
     for (int i = 0; i < H; i++)
         HN *= 2;
     HN--;
-    if (HN == N)
+    if (HN == N) // 计算结点数与2的树高次方的结果是否相同
         return true;
 
     return false;
 }
+```
 
+### isComplete
+
+```c++
 bool isComplete(BiNODE* root)
 {
     if (root == NULL)
@@ -350,21 +421,21 @@ bool isComplete(BiNODE* root)
     queue<BiNODE*> que;
     que.push(root);
     BiNODE *p;
-    bool flag = true;
-    while (!que.empty())
+    bool flag = true; // 标志位
+    while (!que.empty()) // 层序遍历
     {
         p = que.front();
         que.pop();
 
-        if (p->lchild != NULL)
+        if (p->lchild != NULL) 
         {
             que.push(p->lchild);
-            if (flag == false)
-                return false;
+            if (flag == false) // 在已有遍历到的结点孩子为空的情况下，发现还是有孩子不为空的结点
+                return false; // 直接返回不是满树
         }
-        else
-            flag = false;
-
+        else 
+            flag = false; // 查询到某结点的左孩子为空
+			// 标志位置成false，表示已遍历到某结点左孩子为空
         if (p->rchild != NULL)
         {
             que.push(p->rchild);
@@ -372,11 +443,15 @@ bool isComplete(BiNODE* root)
                 return false;
         }
         else
-            flag = false;
+            flag = false; // 与前面同理
     }
     return true;
 }
+```
 
+### isBinarySearchTree
+
+```c++
 int max(BiNODE *root) // 查询树中的最大值
 {
     if (root == NULL)
@@ -417,15 +492,91 @@ bool isBinarySearchTree(BiNODE* root)
         return true;
 
     bool flag = true;
-    if (max(root->lchild) >= root->data)
+    if (max(root->lchild) >= root->data) // 如果左子树的最大值大于等于当前结点，返回false
         flag = false;
-    if (min(root->rchild) <= root->data)
+    if (min(root->rchild) <= root->data) // 如果右子树的最小值小于等于当前结点，返回false
         flag = false;
     
-    if (!isBinarySearchTree(root->lchild))
+    if (!isBinarySearchTree(root->lchild)) // 查询左子树是否满足二叉搜索树定义
         flag = false;
-    if (!isBinarySearchTree(root->rchild))
+    if (!isBinarySearchTree(root->rchild)) // 查询右子树是否满足二叉搜索树定义
         flag = false;
 
     return flag;
 }
+```
+
+## test
+
+### data1
+
+```
+1
+2  3
+4  6
+```
+
+### result1
+
+```
+NodeNum:5
+TreeHeight:3
+isFull:0
+isComplete:0
+isBinarySearchTree:0
+```
+
+### data2(complete tree)
+
+```
+1    
+2   3
+4 5 6
+```
+
+### result2
+
+```
+NodeNum:           6
+TreeHeight:        3
+isFull:            1
+isComplete:        0
+isBinarySearchTree:0
+```
+
+### data3(full tree)
+
+```
+1
+2   3
+4 5 6 7
+```
+
+### result3
+
+``` 
+NodeNum:           7
+TreeHeight:        3
+isFull:            1
+isComplete:        1
+isBinarySearchTree:0
+```
+
+### data4(binary search tree)
+
+```
+3
+2  5
+1  4 6
+```
+
+### result4
+
+```
+NodeNum:           6
+TreeHeight:        3
+isFull:            0
+isComplete:        0
+isBinarySearchTree:1
+```
+
