@@ -1,68 +1,96 @@
 #include <iostream>
-#include <vector>
 #include <string>
 using namespace std;
-
-const int MAXN = 26;
+const int MAXN = 30;
+const int MAXM = 10;
 
 typedef struct node{
-    struct node *parent;
-    vector<struct node *> sons;
-    char key;
-} NODE;
+    char value;
+    struct node* kids[MAXM];
+}NODE;
 
-int N;
-NODE *root;
+typedef struct lnode{
+    char value;
+    int level;
+} LNODE;
 
-void build()
+void priorder(NODE *root)
 {
-    root = new NODE;
-    root->parent = NULL;
+    int i = 0;
+    while (root->kids[i] != NULL)
+    {
+        priorder(root->kids[i]);
+        i++;
+    }
+    cout << root->value;
 }
 
-void preIn(NODE *root)
+NODE* InitialNode(char key)
 {
-    cin >> st;
-    
+    NODE *p = new NODE;
+    p->value = key;
+    for (int i = 0; i < MAXM; i++)
+        p->kids[i] = NULL;
+    return p;
 }
+
+NODE* buildTree1(LNODE levelInput[], int left, int right)
+{
+    if (left > right)
+        return NULL;
+    if (left == right)
+        return InitialNode(levelInput[left].value);
+    else
+    {
+        NODE *root = InitialNode(levelInput[left].value);
+        int childNo = 0;
+        int i = left + 1;
+        int j = right;
+        int lev = levelInput[i].level;
+
+        int k = i + 1;
+        while (k <= j)
+        {
+            if (levelInput[k].level == lev)
+            {
+                root->kids[childNo++] = buildTree1(levelInput, i, k - 1);
+                i = k;
+            }
+            k++;
+        }
+        root->kids[childNo] = buildTree1(levelInput, i, j);
+        return root;
+    }
+}
+
+LNODE levelInput[MAXN];
 
 int main()
 {
+    int N;
     cin >> N;
     string st;
-    int layer = 0;
-    int j;
-    char key;
-    build();
-
-    NODE *parent = root;
-    int player = 0;
-
     for (int i = 0; i < N; i++)
     {
         cin >> st;
-        layer = 0;
-        j = 1;
-        for (; st[j] != ','; j++)
+        int level = 0;
+        char key = 'A';
+        for (int j = 1; j < (int)st.length(); j++)
         {
-            layer = layer * 10 + st[j] - '0';
+            if (st[j] >= '0' && st[j] <='9')
+            {
+                level = level * 10 + st[j] - '0';
+            }
+            else if (st[j] >= 'A' && st[j] <= 'Z')
+            {
+                key = st[j];
+            }
         }
-        key = st[j + 1];
-
-        if (layer == 0)
-        {
-            root->key = key;
-            continue;
-        }
-
-        NODE *k = new NODE;
-        k->key = key;
-
-        if (player < layer)
-        {
-            k->parent = parent;
-            parent->sons.push_back(k);
-        }
+        levelInput[i].level = level;
+        levelInput[i].value = key;
     }
-
+    NODE *root;
+    root = buildTree1(levelInput, 0, N - 1);
+    priorder(root);
+    cout << endl;
 }
