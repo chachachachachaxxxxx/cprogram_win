@@ -55,6 +55,7 @@ bool dfs(long long k, long long x, long long y)
     
     if (ans[anss] != 0 && ans[anss] < imax)
         imax = ans[anss];
+        
     long long im = s1 > s2 ? s1 : s2;
     for (long long i = imax; i >= im; i--)
     {
