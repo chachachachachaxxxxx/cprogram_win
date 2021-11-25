@@ -428,9 +428,3 @@ bool isBinarySearchTree(BiNODE* root)
 
     return flag;
 }
-
-
-int main()
-{
-    
-}
