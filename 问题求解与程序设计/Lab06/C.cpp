@@ -24,14 +24,14 @@ bool dfs(long long k, long long x, long long y)
     }
     if (k == 1)
     {
-        // if (x == 1)
-        // {        
-        //     for (long long i = 1; i <= t; i++)
-        //     {
-        //         cout << s[i] << " ";
-        //     }
-        //     cout << y << endl;
-        // }
+        if (x == 1)
+        {        
+            for (long long i = 1; i <= t; i++)
+            {
+                cout << s[i] << " ";
+            }
+            cout << y << endl;
+        }
 
         // cerr << "wrong" << endl;
         if (x == 1 && y > s[t] && (anss == 0 || y < ans[anss]))
@@ -52,6 +52,7 @@ bool dfs(long long k, long long x, long long y)
     long long s2 = y / x + 1; 
     //cerr << "wrong" << x << " " << y << endl;
     long long imax = k * y / x;
+    
     if (ans[anss] != 0 && ans[anss] < imax)
         imax = ans[anss];
     long long im = s1 > s2 ? s1 : s2;
