@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+<<<<<<< HEAD
+=======
 const int MAXN = 1e5 + 10;
 
 map<string, int> peopleToNo;
@@ -66,3 +68,4 @@ int main()
         }
     }
 }
+>>>>>>> 967f011e368a529b140992fe674f9b252475ce12

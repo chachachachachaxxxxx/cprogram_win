@@ -45,6 +45,9 @@ int main()
 
     for (int i = 1; i <= N; i++)
     {
-        
+        sums[find(i)]++;
     }
+
+    sort(sums + 1, sums + N + 1);
+    cout << sums[N] << endl;
 }
